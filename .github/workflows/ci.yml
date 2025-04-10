@@ -1,7 +1,7 @@
 name: End-to-end tests
 on: push
 jobs:
-  cypress-run:
+  cypress-web-tests:
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout
@@ -16,3 +16,18 @@ jobs:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
         with:
           command: npm run test-cloud
+  cypress-mobile-tests:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Cypress run
+        uses: cypress-io/github-action@v6
+        env:
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+        with:
+          command: npm run test-mobile-cloud
